@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<!-- config handler mapping -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="home.htm">vic</prop>
+				<prop key="viewAllVeg.htm">vAllVeg</prop>
+				<prop key="editVeg.htm">updVeg</prop>
+				<prop key="deletVeg.htm">delVeg</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- config delete Veg controller -->
+	<bean id="delVeg" class="com.nt.controller.DeleteVegController">
+		<constructor-arg ref="service"/>
+	</bean>
+	<!-- config the UpdateVegcontroller sub class of abstract Command Controller -->
+	<bean id="updVeg" class="com.nt.controller.UpdateVegController">
+		<constructor-arg ref="service"/>
+		<property name="commandClass" value="com.nt.command.VegetableCommand"/>
+		<property name="commandName" value="cmd"/>
+	</bean>
+	
+	<!-- config simple form controller sub class -->
+	<bean id="vic" class="com.nt.controller.VegetableInsertController">
+		<constructor-arg ref="service"/>
+		<property name="formView" value="veg_reg_form"/>
+		<property name="successView" value="result"/>
+		<property name="commandName" value="cmd"/>
+		<property name="commandClass" value="com.nt.command.VegetableCommand"/>
+		<property name="validator" ref="vvldtr"/>
+		<property name="sessionForm" value="true" />
+	</bean>
+	
+	<!-- config abstract form controller sub class -->
+	<bean id="vAllVeg" class="com.nt.controller.ViewAllVegetableController">
+		<property name="commandClass" value="com.nt.command.VegetableCommand"/>
+		<property name="commandName" value="cmd"/>
+		<constructor-arg ref="service"/>
+	</bean>	
+	<!-- config view resolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- config the validater class -->
+	<bean id="vvldtr" class="com.nt.validate.VegetableFormValidator"/>
+	
+	<!-- config the properties file -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="com/nt/command/errorMsgs"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,14 @@
+SQL> create table vegetable_reg(vid number(5) primary key, vname varchar2(15), status varchar2(6),  vitamins varchar2(25));
+
+Table created.
+
+SQL>
+SQL> ALTER TABLE VEGETABLE_REG ADD VPRICE NUMBER(8,2);
+
+Table altered.
+
+SQL>SQL> ALTER TABLE VEGETABLE_REG ADD VPRICE NUMBER(8,2);
+
+Table altered.
+
+SQL>
